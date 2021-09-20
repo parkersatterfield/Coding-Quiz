@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./assets/styles.css">
+    </head>
+    <body>
+        <header>
+            <p>View Highscores</p>
+            <p id = 'timer'>Timer: </p>
+        </header>
+
+        <main id = "main">
+            <h1>Coding Quiz Challenge!</h1>
+            <p>
+                Sharpen your skills on JavaScript!
+            </p>
+            <button id = 'start'>Start Quiz</button>
+        </main>
+
+        <section id = "quiz-card">
+            <h1 id = 'question'>Question</h1>
+            <div>
+                <button id = 'option1'>
+                    Option 1
+                </button>
+                <button id = 'option2'>
+                    Option 2
+                </button>
+                <button id = 'option3'>
+                    Option 3
+                </button>
+                <button id = 'option4'>
+                    Option 4
+                </button>
+            </div>
+            <h3 id = 'correct'>Correct!</h3>
+            <h3 id = 'wrong'>Wrong!</h3>
+           
+        </section>
+
+        <section id = 'done'>
+            <h1>Congrats on Completing the Quiz</h1>
+            <h2>Your score is </h2>
+            <input type="text">
+            <button>Submit</button>
+
+        </section>
+
+        <section id = 'highscores'>
+            <h1>High Scores</h1>
+            <ol>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+
+        </section>
+
+        <script src="./assets/script.js" async defer></script>
+    </body>
+</html>

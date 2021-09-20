@@ -1,0 +1,86 @@
+/* default styles */
+* {
+    font-family: sans-serif;
+
+}
+
+header {
+    display: flex;
+    align-content: space-between;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+h1 {
+    font-size: x-large;
+    text-align: center;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+main {
+    background-color: rgb(66, 66, 66);
+    padding: 1rem;
+    margin: 0.25rem 2rem 0.5rem 2rem;
+    border-radius: 10px;
+    display: ;
+}
+
+main button {
+    background-color: purple;
+    color: white;
+    border-radius: 10px;
+    border-style: none;
+    padding: 5px 10px 5px 10px;
+    margin: 0 auto;
+    display: block;
+}
+
+button:hover {
+    background-color: rgb(177, 0, 177);
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.2);
+}
+
+main p {
+    text-align: center;
+}
+
+#quiz-card {
+    background-color: wheat;
+    border-radius: 10px;
+    padding: 0.25rem 1rem 0.5rem 1rem;
+    margin: 0.25rem 2rem 0.5rem 2rem;
+}
+
+#quiz-card div {
+    display: flex;
+    flex-direction: column;
+}
+
+#quiz-card button {
+    background-color: purple;
+    color: white;
+    border-radius: 10px;
+    border-style: none;
+    padding: 5px 10px 5px 10px;
+    width: fit-content;
+    margin: 0.25rem;
+}
+
+#quiz-card h3 {
+    display: none;
+}
+
+#done {
+    background-color: rgb(245, 242, 237);
+    border-radius: 10px;
+    padding: 0.25rem 1rem 0.5rem 1rem;
+    margin: 0.25rem 2rem 0.5rem 2rem;
+}
+
+#highscores {
+    background-color: rgb(245, 242, 237);
+    border-radius: 10px;
+    padding: 0.25rem 1rem 0.5rem 1rem;
+    margin: 0.25rem 2rem 0.5rem 2rem;
+}
