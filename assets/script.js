@@ -4,7 +4,7 @@ var timeEl = document.getElementById('timer');
 var quizCard = document.getElementById('quiz-card');
 var main = document.getElementById('main');
 var done = document.getElementById('done');
-var highscores = document.getElementById('highscores');
+var highscoresEl = document.getElementById('highscores');
 var user = document.getElementById('user'); // access input with user.value
 var question = document.getElementById('question');
 var option1 = document.getElementById('option1');
@@ -21,8 +21,10 @@ var fifthPlace = document.getElementById('fifth place');
 var submitButton = document.getElementById('submit');
 var correctAnswerButton = document.querySelector('.correct');
 var incorrectAnswerButton = document.querySelectorAll('incorrect');
+var yourScore = document.getElementById('your-score');
+var home = document.getElementById('home');
+var viewHighscoresEl = document.getElementById('view-highscores');
 var score = 0;
-
 // initialize quiz time variable
 var timeLeft = 15;
 
@@ -59,17 +61,16 @@ function quiz() {
         timeLeft--;
         timeEl.textContent = 'time: ' + timeLeft;
         // if timer reaches 0, hide #quiz-card, show #done, set score to 0
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             clearInterval(timeInterval);
             quizCard.setAttribute('style', 'display:none;');
             done.setAttribute('style', 'display: block');
             timeEl.textContent = 'time: 0';
+            yourScore.textContent = 'Your score is 0';
             return; 
         }
         if (questionNumber === questionList.length) {
             clearInterval(timeInterval);
-            quizCard.setAttribute('style', 'display:none;');
-            score = timeLeft;
             return;
         }
     }, 1000);
@@ -98,12 +99,13 @@ var displayQuestion = function() {
     if (questionNumber === questionList.length) {
         quizCard.setAttribute('style', 'display: none;');
         done.setAttribute('style', 'display:block;');
+        score = timeLeft;
+        yourScore.textContent = 'Your score is ' + score;
     };
 };
 
 // Hard codes correct answers by changing button classes
 var updateCorrectAnswer = function () {
-    updateEventListeners();
     if (questionNumber === 0) {
         option1.className = 'incorrect';
         option2.className = 'incorrect';
@@ -140,31 +142,43 @@ var nextQuestion = function() {
     wrong.setAttribute('style', 'display: none;');
     displayQuestion(); 
     updateCorrectAnswer();
+    updateEventListeners();
 }
-
-// populate #done with score 
 
 // function to set local storage with highscores
 var storeHighscore = function () {
-    localStorage.setItem('score', score);
-    localStorage.setItem('user', user.value);
-    updateScore();
+    var highscores = [];
+    highscores.push([score, user.value]);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    highscoresEl.setAttribute('style', 'display: block;');
 };
 
-var updateScore = function () {
-    // Saves locally stored score as variable
-    var score = localStorage.getItem('score');
-    firstPlace.textContent = score + ": " + user;
-}
+// populates highscore list 
+var highscores = JSON.parse(localStorage.getItem("highscores"));
+firstPlace.textContent = highscores[0];
+secondPlace.textContent = highscores[1];
+thirdPlace.textContent = highscores[2];
+fourthPlace.textContent = highscores[3];
+fifthPlace.textContent = highscores[4];
 
 // event listeners
 startButton.addEventListener('click', quiz); // starts quiz
 submitButton.addEventListener('click', storeHighscore);
+home.addEventListener('click', function() {
+    done.setAttribute('style', 'display:none');
+    highscoresEl.setAttribute('style', 'display:none');
+    main.setAttribute('style', 'display:block');
+    questionNumber = 0;
+})
+
+viewHighscoresEl.addEventListener('click', function () {
+    highscoresEl.setAttribute('style', 'display: block')
+})
 
 // update event listeners function for dynamically generated elements
 var updateEventListeners = function () {
     correctAnswerButton = document.querySelector('.correct');
-    correctAnswerButton.addEventListener('click' ,nextQuestion);
+    correctAnswerButton.addEventListener('click', nextQuestion);
     incorrectAnswerButton = document.querySelectorAll('.incorrect');
     for (var i = 0; i < incorrectAnswerButton.length; i++) {
         incorrectAnswerButton[i].addEventListener('click', wrongAnswer);

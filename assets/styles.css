@@ -12,17 +12,17 @@ header {
 }
 
 h1 {
-    font-size: x-large;
+    font-size: xx-large;
     text-align: center;
     padding: 1rem 0.5rem 0.5rem 0.5rem;
+    color: purple;
 }
 
 main {
-    background-color: rgb(66, 66, 66);
+    background-color: rgb(131, 131, 131);
     padding: 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
     border-radius: 10px;
-    display: ;
 }
 
 main button {
@@ -46,7 +46,7 @@ main p {
 }
 
 #quiz-card {
-    background-color: wheat;
+    background-color: rgb(131,131,131);
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
@@ -68,12 +68,17 @@ main p {
     margin: 0.25rem;
 }
 
+#quiz-card h1 {
+    text-align: left;
+    color: black;
+}
+
 #quiz-card h3 {
     display: none;
 }
 
 #done {
-    background-color: rgb(245, 242, 237);
+    background-color: rgb(131,131,131);
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
@@ -81,7 +86,7 @@ main p {
 }
 
 #highscores {
-    background-color: rgb(245, 242, 237);
+    background-color: rgb(131,131,131);
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
