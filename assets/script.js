@@ -11,6 +11,20 @@ var option1 = document.getElementById('option1');
 var option2 = document.getElementById('option2');
 var option3 = document.getElementById('option3');
 var option4 = document.getElementById('option4');
+var correct = document.getElementById('correct');
+var wrong = document.getElementById('wrong');
+var firstPlace = document.getElementById('first place');
+var secondPlace = document.getElementById('second place');
+var thirdPlace = document.getElementById('third place');
+var fourthPlace = document.getElementById('fourth place');
+var fifthPlace = document.getElementById('fifth place');
+var submitButton = document.getElementById('submit');
+var correctAnswerButton = document.querySelector('.correct');
+var incorrectAnswerButton = document.querySelectorAll('incorrect');
+var score = 0;
+
+// initialize quiz time variable
+var timeLeft = 15;
 
 // Define quiz questions as array
 var questionList = [
@@ -20,23 +34,27 @@ var questionList = [
     'String values must be enclosed by ____'
 ];
 
-// Page states to store question number
+// Page state to store question number
 var questionNumber = 0;
-// saves locally stored score as variable
-var highscores = localStorage.getItem('score');
 
 // Quiz Function
 function quiz() {
     // hide main, show quiz card
     main.setAttribute('style', 'display:none;');
     quizCard.setAttribute('style', 'display:block;');
+    // display q1
     question.textContent = questionList[questionNumber];
-    option1.value = 'boolean';
-    option2.value = 'string';
-    option3.value = 'array';
-    option4.value = 'orientation';
+    option1.textContent = 'boolean';
+    option1.className = 'incorrect'
+    option2.textContent = 'string';
+    option2.className = 'incorrect'
+    option3.textContent = 'array';
+    option3.className = 'incorrect'
+    option4.textContent = 'orientation';
+    option4.className = 'correct';
+    updateEventListeners();
+    updateCorrectAnswer();
     // start timer
-    var timeLeft = 15;
     var timeInterval = setInterval(function() {
         timeLeft--;
         timeEl.textContent = 'time: ' + timeLeft;
@@ -44,61 +62,111 @@ function quiz() {
         if (timeLeft === 0) {
             clearInterval(timeInterval);
             quizCard.setAttribute('style', 'display:none;');
+            done.setAttribute('style', 'display: block');
             timeEl.textContent = 'time: 0';
             return; 
         }
+        if (questionNumber === questionList.length) {
+            clearInterval(timeInterval);
+            quizCard.setAttribute('style', 'display:none;');
+            score = timeLeft;
+            return;
+        }
     }, 1000);
-
-    // if correct button is clicked, show #correct, then display question as h1 and answers as buttons 1-4. else, show wrong
-    
 };
 
 var displayQuestion = function() {
     // display question as h1 and answers as buttons 1-4
     question.textContent = questionList[questionNumber];
     if (questionNumber === 1) {
-        option1.value = '[brackets]';
-        option2.value = '(parenthasis)';
-        option3.value = '"quotes';
-        option4.value = '`backticks`';
+        option1.textContent = '[brackets]';
+        option2.textContent = '(parenthasis)';
+        option3.textContent = '"quotes';
+        option4.textContent = '`backticks`';
     } else if (questionNumber === 2) {
-        option1.value = 'objects';
-        option2.value = 'other arrays';
-        option3.value = 'functions';
-        option4.value = 'singular data values';
+        option1.textContent = 'objects';
+        option2.textContent = 'other arrays';
+        option3.textContent = 'functions';
+        option4.textContent = 'singular data values';
     } else if (questionNumber === 3) {
-        option1.value = '[brackets]';
-        option2.value = '(parenthasis)';
-        option3.value = '"quotes';
-        option4.value = '`backticks`';  
+        option1.textContent = '[brackets]';
+        option2.textContent = '(parenthasis)';
+        option3.textContent = '"quotes';
+        option4.textContent = '`backticks`';  
     };
-    
+    // Designates end of quiz
     if (questionNumber === questionList.length) {
         quizCard.setAttribute('style', 'display: none;');
         done.setAttribute('style', 'display:block;');
     };
 };
 
+// Hard codes correct answers by changing button classes
+var updateCorrectAnswer = function () {
+    updateEventListeners();
+    if (questionNumber === 0) {
+        option1.className = 'incorrect';
+        option2.className = 'incorrect';
+        option3.className = 'incorrect';
+        option4.className = 'correct';
+    } else if (questionNumber === 1) {
+        option1.className = 'incorrect';
+        option2.className = 'correct';
+        option3.className = 'incorrect';
+        option4.className = 'incorrect';
+    } else if (questionNumber === 2) {
+        option1.className = 'incorrect';
+        option2.className = 'incorrect';
+        option3.className = 'incorrect';
+        option4.className = 'correct';
+    } else if (questionNumber === 3) {
+        option1.className = 'incorrect';
+        option2.className = 'incorrect';
+        option3.className = 'correct';
+        option4.className = 'incorrect';
+    }
+};
+
+var wrongAnswer = function() {
+    wrong.setAttribute('style', 'display: block;');
+    correct.setAttribute('style', 'display:none;');
+    timeLeft = timeLeft - 2;
+    console.log('wrong answer');
+}
+
 var nextQuestion = function() {
     questionNumber++;
+    correct.setAttribute('style', 'display:block;');
+    wrong.setAttribute('style', 'display: none;');
     displayQuestion(); 
-    console.log(questionNumber);
-
+    updateCorrectAnswer();
 }
 
 // populate #done with score 
-
 
 // function to set local storage with highscores
 var storeHighscore = function () {
     localStorage.setItem('score', score);
     localStorage.setItem('user', user.value);
+    updateScore();
 };
+
+var updateScore = function () {
+    // Saves locally stored score as variable
+    var score = localStorage.getItem('score');
+    firstPlace.textContent = score + ": " + user;
+}
 
 // event listeners
 startButton.addEventListener('click', quiz); // starts quiz
-option1.addEventListener('click', nextQuestion) // answer question with option 1
-option2.addEventListener('click', nextQuestion) // answer question with option 2
-option3.addEventListener('click', nextQuestion) // answer question with option 3
-option4.addEventListener('click', nextQuestion) // answer question with option 4
+submitButton.addEventListener('click', storeHighscore);
 
+// update event listeners function for dynamically generated elements
+var updateEventListeners = function () {
+    correctAnswerButton = document.querySelector('.correct');
+    correctAnswerButton.addEventListener('click' ,nextQuestion);
+    incorrectAnswerButton = document.querySelectorAll('.incorrect');
+    for (var i = 0; i < incorrectAnswerButton.length; i++) {
+        incorrectAnswerButton[i].addEventListener('click', wrongAnswer);
+    };
+};

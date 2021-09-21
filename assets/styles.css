@@ -50,6 +50,7 @@ main p {
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
+    display: none;
 }
 
 #quiz-card div {
@@ -76,6 +77,7 @@ main p {
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
+    display: none;
 }
 
 #highscores {
@@ -83,4 +85,5 @@ main p {
     border-radius: 10px;
     padding: 0.25rem 1rem 0.5rem 1rem;
     margin: 0.25rem 2rem 0.5rem 2rem;
+    display: none;
 }
