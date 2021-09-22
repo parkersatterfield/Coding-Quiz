@@ -146,23 +146,25 @@ var nextQuestion = function() {
 }
 
 // function to set local storage with highscores
+var highscoresUnsorted = [JSON.parse(localStorage.getItem("highscores"))];
 var storeHighscore = function () {
-    var highscoresUnsorted = [];
-    highscoresUnsorted.push([score, user.value]);
-    var highscores = highscoresUnsorted.sort(function(a, b) { return a - b; });
-    localStorage.setItem("highscores", JSON.stringify(highscores));
+    highscoresUnsorted.push(user.value + ': ' + score); // when storing a score, the score and name input are pushed to he high scores array as an array
+    var highscores = highscoresUnsorted.sort(); // stores a new array as the sorted version of the high scores array
+    localStorage.setItem("highscores", JSON.stringify(highscores)); // sets sorted high scores array to local storage
     highscoresEl.setAttribute('style', 'display: block;');
+    initScores();
 };
 
 // populates highscore list 
 var initScores = function () {
-    var highscores = JSON.parse(localStorage.getItem("highscores"));
-    firstPlace.textContent = highscores[0];
-    secondPlace.textContent = highscores[1];
-    thirdPlace.textContent = highscores[2];
-    fourthPlace.textContent = highscores[3];
+    var highscores = [JSON.parse(localStorage.getItem("highscores"))];
+    firstPlace.textContent = highscores[0][1];
+    secondPlace.textContent = highscores[0][2];
+    thirdPlace.textContent = highscores[0][3];
+    fourthPlace.textContent = highscores[0][4];
     fifthPlace.textContent = highscores[4];
 };
+initScores();
 
 // event listeners
 startButton.addEventListener('click', quiz); // starts quiz
@@ -172,6 +174,7 @@ home.addEventListener('click', function() {
     highscoresEl.setAttribute('style', 'display:none');
     main.setAttribute('style', 'display:block');
     questionNumber = 0;
+    timeLeft = 15;
 })
 
 viewHighscoresEl.addEventListener('click', function () {
