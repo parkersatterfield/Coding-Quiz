@@ -147,19 +147,22 @@ var nextQuestion = function() {
 
 // function to set local storage with highscores
 var storeHighscore = function () {
-    var highscores = [];
-    highscores.push([score, user.value]);
+    var highscoresUnsorted = [];
+    highscoresUnsorted.push([score, user.value]);
+    var highscores = highscoresUnsorted.sort(function(a, b) { return a - b; });
     localStorage.setItem("highscores", JSON.stringify(highscores));
     highscoresEl.setAttribute('style', 'display: block;');
 };
 
 // populates highscore list 
-var highscores = JSON.parse(localStorage.getItem("highscores"));
-firstPlace.textContent = highscores[0];
-secondPlace.textContent = highscores[1];
-thirdPlace.textContent = highscores[2];
-fourthPlace.textContent = highscores[3];
-fifthPlace.textContent = highscores[4];
+var initScores = function () {
+    var highscores = JSON.parse(localStorage.getItem("highscores"));
+    firstPlace.textContent = highscores[0];
+    secondPlace.textContent = highscores[1];
+    thirdPlace.textContent = highscores[2];
+    fourthPlace.textContent = highscores[3];
+    fifthPlace.textContent = highscores[4];
+};
 
 // event listeners
 startButton.addEventListener('click', quiz); // starts quiz
@@ -177,6 +180,15 @@ viewHighscoresEl.addEventListener('click', function () {
 
 // update event listeners function for dynamically generated elements
 var updateEventListeners = function () {
+    // remove old event listeners
+    correctAnswerButton = document.querySelector('.correct');
+    correctAnswerButton.removeEventListener('click', wrongAnswer);
+    incorrectAnswerButton = document.querySelectorAll('.incorrect');
+    for (var i = 0; i < incorrectAnswerButton.length; i++) {
+        incorrectAnswerButton[i].removeEventListener('click', nextQuestion);
+    };
+
+    // add new listeners to dynamically updated element classes
     correctAnswerButton = document.querySelector('.correct');
     correctAnswerButton.addEventListener('click', nextQuestion);
     incorrectAnswerButton = document.querySelectorAll('.incorrect');
